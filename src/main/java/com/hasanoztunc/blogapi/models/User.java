@@ -65,6 +65,14 @@ final public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @ToString.Exclude
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Post> posts = new HashSet<>();
+
     public User(String userName, String email, String password) {
         this.userName = userName;
         this.email = email;
