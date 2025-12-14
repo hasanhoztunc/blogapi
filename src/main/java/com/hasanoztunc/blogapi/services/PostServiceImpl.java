@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -30,6 +31,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public PostDTO createPost(PostDTO postDTO) {
         var isPostExist = postRepository
                 .findBySlug(postDTO.getSlug());
@@ -94,6 +96,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public PostDTO updatePost(Long postId, PostDTO postDTO) {
         var loggedInUserId = authUtil.loggedInUserId();
         var postFromDb = postRepository.findByIdAndUserId(postId, loggedInUserId)
@@ -111,6 +114,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public PostDTO deletePost(Long postId) {
         var loggedInUserId = authUtil.loggedInUserId();
         var postFromDb = postRepository.findByIdAndUserId(postId, loggedInUserId)

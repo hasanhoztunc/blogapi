@@ -10,6 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -83,6 +86,13 @@ public class Post {
     )
     private User user;
 
+    @OneToMany(
+            mappedBy = "post",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Comment> comments = new HashSet<>();
+
     public Post(
             String title,
             String content,
@@ -95,8 +105,16 @@ public class Post {
         this.user = user;
     }
 
-//    @PrePersist
-//    private void onCreate() {
-//        this.createdAt = new Date();
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(postId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return Objects.equals(postId, post.postId);
+    }
 }
