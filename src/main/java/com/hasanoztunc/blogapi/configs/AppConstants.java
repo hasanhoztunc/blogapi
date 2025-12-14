@@ -4,5 +4,6 @@ public class AppConstants {
     public static final String PAGE_NUMBER = "0";
     public static final String PAGE_SIZE = "10";
     public static final String SORT_POST_BY = "title";
+    public static final String SORT_COMMENT_BY = "id";
     public static final String SORT_ORDER = "asc";
 }
